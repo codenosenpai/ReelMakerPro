@@ -4,7 +4,7 @@
 #define AppName "ReelMaker Pro"
 #define AppVersion "1.0.0"
 #define AppPublisher "Ton Nom"
-#define AppURL "https://github.com/codenosenpai/ReelMakerPro"
+#define AppURL "https://github.com/TON_USERNAME/reelmaker-pro"
 #define AppExeName "ReelMakerPro.exe"
 
 [Setup]

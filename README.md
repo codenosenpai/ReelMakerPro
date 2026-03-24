@@ -46,7 +46,7 @@ Pour publier une mise à jour :
   "version": "1.1.0",
   "release_date": "2025-04-01",
   "changelog": "Description des changements",
-  "download_url": "https://github.com/codenosenpai/ReelMakerPro/releases/latest/download/ReelMakerPro_Setup.exe",
+  "download_url": "https://github.com/TON_USERNAME/reelmaker-pro/releases/latest/download/ReelMakerPro_Setup.exe",
   "mandatory": false
 }
 ```
@@ -63,10 +63,10 @@ Pour publier une mise à jour :
 
 ## Configuration GitHub (première fois)
 
-1. Crée un repo GitHub : `ReelMakerPro`
-2. Dans `updater.py`, remplace `codenosenpai` par ton vrai username GitHub
-3. Dans `setup.iss`, remplace `codenosenpai` par ton username
-4. Dans `version.json`, remplace `codenosenpai` par ton username
+1. Crée un repo GitHub : `reelmaker-pro`
+2. Dans `updater.py`, remplace `TON_USERNAME` par ton vrai username GitHub
+3. Dans `setup.iss`, remplace `TON_USERNAME` par ton username
+4. Dans `version.json`, remplace `TON_USERNAME` par ton username
 5. Push tout sur GitHub
 6. Va dans **Settings → Actions → Workflow permissions** → autoriser "Read and write"
 

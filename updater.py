@@ -9,7 +9,7 @@ import urllib.error
 from packaging import version as pkg_version
 
 # ⚠️ Remplace par ton vrai repo GitHub
-GITHUB_RAW_URL = "https://raw.githubusercontent.com/codenosenpai/ReelMakerPro/main/version.json"
+GITHUB_RAW_URL = "https://raw.githubusercontent.com/TON_USERNAME/reelmaker-pro/main/version.json"
 CURRENT_VERSION = "1.0.0"
 
 
