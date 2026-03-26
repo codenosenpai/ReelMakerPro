@@ -1,0 +1,10 @@
+build/
+dist/
+dist_installer/
+*.spec
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.log
+instagram.com_cookies.txt
