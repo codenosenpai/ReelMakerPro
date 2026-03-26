@@ -16,7 +16,7 @@ from PIL import Image
 
 from engine import Engine
 from auto_mode import AutoMode
-from updater import check_update, CURRENT_VERSION
+from updater import check_update, download_and_install, CURRENT_VERSION
 
 ctk.set_appearance_mode("dark")
 
@@ -54,49 +54,69 @@ class UpdateDialog(ctk.CTkToplevel):
     def __init__(self, parent, info: dict):
         super().__init__(parent)
         self.title("Mise à jour disponible")
-        self.geometry("480x300")
+        self.geometry("500x340")
         self.resizable(False, False)
         self.configure(fg_color=CARD)
         self.grab_set()
         self.lift()
+        self._info   = info
+        self._parent = parent
 
-        # Icône
-        ctk.CTkLabel(self, text="⬆",
-                     font=ctk.CTkFont(size=48),
-                     text_color=ACCENT).pack(pady=(28, 4))
+        # Header
+        hdr = ctk.CTkFrame(self, fg_color=ACCENT3, height=70, corner_radius=0)
+        hdr.pack(fill="x")
+        hdr.pack_propagate(False)
+        ctk.CTkLabel(hdr, text=f"  ⬆  ReelMaker Pro {info['version']} disponible !",
+                     font=ctk.CTkFont("Georgia", 14, "bold"),
+                     text_color=WHITE).pack(side="left", padx=20, pady=20)
 
-        ctk.CTkLabel(self, text=f"ReelMaker Pro  {info['version']}  est disponible !",
-                     font=ctk.CTkFont("Georgia", 15, "bold"),
-                     text_color=WHITE).pack()
-
-        ctk.CTkLabel(self, text=f"Version actuelle : {CURRENT_VERSION}",
-                     font=ctk.CTkFont(size=11), text_color=MUTED).pack(pady=2)
+        ctk.CTkLabel(self, text=f"Version installée : {CURRENT_VERSION}",
+                     font=ctk.CTkFont(size=11), text_color=MUTED).pack(pady=(12,2))
 
         # Changelog
         changelog = info.get("changelog", "")
         if changelog:
             box = ctk.CTkFrame(self, fg_color=INPUT, corner_radius=8)
-            box.pack(fill="x", padx=28, pady=12)
-            ctk.CTkLabel(box, text=changelog,
-                         font=ctk.CTkFont(size=11), text_color=MUTED2,
-                         wraplength=400).pack(padx=14, pady=10)
+            box.pack(fill="x", padx=24, pady=8)
+            ctk.CTkLabel(box, text=f"Nouveautés : {changelog}",
+                         font=ctk.CTkFont(size=11), text_color=WHITE,
+                         wraplength=420).pack(padx=14, pady=10, anchor="w")
+
+        # Barre de progression (cachée au départ)
+        self.prog_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.prog_frame.pack(fill="x", padx=24, pady=(0,4))
+        self.prog_lbl = ctk.CTkLabel(self.prog_frame, text="",
+                                      font=ctk.CTkFont(size=10), text_color=MUTED)
+        self.prog_lbl.pack(anchor="w")
 
         # Boutons
         btns = ctk.CTkFrame(self, fg_color="transparent")
-        btns.pack(pady=(0, 20))
+        btns.pack(pady=(4, 20))
 
-        ctk.CTkButton(btns, text="⬇  Télécharger la mise à jour",
-                      command=lambda: webbrowser.open(info.get("download_url", "")),
-                      fg_color=ACCENT, hover_color=ACCENT3,
-                      height=40, width=220,
+        self.btn_install = ctk.CTkButton(btns,
+                      text="⬇  Télécharger et installer",
+                      command=self._auto_install,
+                      fg_color=GREEN, hover_color="#059669",
+                      text_color=BG, height=42, width=210,
                       font=ctk.CTkFont(size=12, weight="bold"),
-                      corner_radius=10).pack(side="left", padx=6)
+                      corner_radius=10)
+        self.btn_install.pack(side="left", padx=6)
 
         ctk.CTkButton(btns, text="Plus tard",
                       command=self.destroy,
                       fg_color=INPUT, hover_color=BORDER,
-                      text_color=MUTED2, height=40, width=100,
+                      text_color=MUTED2, height=42, width=100,
                       font=ctk.CTkFont(size=12), corner_radius=10).pack(side="left", padx=6)
+
+    def _auto_install(self):
+        self.btn_install.configure(state="disabled",
+                                   text="Téléchargement…",
+                                   fg_color=MUTED)
+        url = self._info.get("download_url", "")
+        download_and_install(url, log_fn=self._log)
+
+    def _log(self, msg):
+        self.after(0, lambda: self.prog_lbl.configure(text=msg, text_color=ACCENT2))
 
 
 # ═══════════════════════════════════════════════════

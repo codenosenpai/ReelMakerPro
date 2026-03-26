@@ -53,9 +53,8 @@ def build_exe():
         if os.path.exists(f):
             cmd += ["--add-data", f"{f};."]
 
-    # Icône (optionnelle)
-    if os.path.exists("icon.ico"):
-        cmd += ["--icon", "icon.ico"]
+    # Icône
+    cmd += ["--icon", "icon.ico"]
 
     cmd.append(MAIN_FILE)
 
