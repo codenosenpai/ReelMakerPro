@@ -1,7 +1,7 @@
 {
   "version": "1.0.1",
-  "release_date": "2025-03-22",
+  "release_date": "2026-03-26",
   "changelog": "Version initiale de ReelMaker Pro",
-  "download_url": "https://github.com/TON_USERNAME/reelmaker-pro/releases/latest/download/ReelMakerPro_Setup.exe",
+  "download_url": "https://github.com/codenosenpai/ReelMakerPro/releases/latest/download/ReelMakerPro_Setup.exe",
   "mandatory": false
 }
